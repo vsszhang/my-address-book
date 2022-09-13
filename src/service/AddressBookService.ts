@@ -13,12 +13,12 @@ export class AddressBookService {
   async saveAddress(addressBookRequest: AddressBookRequest) {
     // create a entity object
     const addressBook = new AddressBook();
-    const { id, did, address } = addressBookRequest;
-    addressBook.id = id;
+    const { did, address } = addressBookRequest;
     addressBook.did = did;
     addressBook.address = address;
 
     // save entity
-    await this.addressBookModel.save(addressBook);
+    const res = await this.addressBookModel.save(addressBook);
+    return res;
   }
 }
