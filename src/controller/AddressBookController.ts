@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Provide,
+  Put,
 } from '@midwayjs/decorator';
 import { AddressBookRequest } from '../request/addressBookObj';
 import { AddressBookService } from '../service/AddressBookService';
@@ -34,5 +35,17 @@ export class AddressBookController {
   async removeByAddress(@Param() address: string) {
     const removeRequest = this.addrssBookService.deleteByAddress(address);
     return removeRequest;
+  }
+
+  @Put('/update/:address')
+  async updateDidByAddress(
+    @Param() address: string,
+    @Body(ALL) addressBookObj: AddressBookRequest
+  ) {
+    const updateRequest = this.addrssBookService.updateDidByAddress(
+      address,
+      addressBookObj
+    );
+    return updateRequest;
   }
 }
