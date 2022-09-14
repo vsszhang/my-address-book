@@ -41,4 +41,14 @@ export class AddressBookService {
     // const deleteRes = await this.addressBookReposity.delete({ address: addr });
     // return deleteRes;
   }
+
+  // update by address
+  async updateDidByAddress(addr_: string, addressBookObj: AddressBookRequest) {
+    const { did, address } = addressBookObj;
+    const updateRes = await this.addressBookReposity.update(
+      { address: addr_ },
+      { did: did, address: address }
+    );
+    return updateRes;
+  }
 }
