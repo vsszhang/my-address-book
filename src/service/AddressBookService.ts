@@ -7,7 +7,7 @@ import { AddressBookRequest } from '../request/addressBookObj';
 @Provide()
 export class AddressBookService {
   @InjectEntityModel(AddressBook)
-  addressBookModel: Repository<AddressBook>;
+  addressBookReposity: Repository<AddressBook>;
 
   // save
   async saveAddress(addressBookRequest: AddressBookRequest) {
@@ -18,7 +18,27 @@ export class AddressBookService {
     addressBook.address = address;
 
     // save entity
-    const res = await this.addressBookModel.save(addressBook);
+    const res = await this.addressBookReposity.save(addressBook);
     return res;
+  }
+
+  // find by address
+  async findByAddress(addr: string) {
+    // find one by given address
+    const record = await this.addressBookReposity.find({
+      where: { address: addr },
+    });
+    return record;
+  }
+
+  // remove/delete by address
+  async deleteByAddress(addr: string) {
+    const recordToRemove = await this.addressBookReposity.findBy({
+      address: addr,
+    });
+    const removeRes = await this.addressBookReposity.remove(recordToRemove);
+    return removeRes;
+    // const deleteRes = await this.addressBookReposity.delete({ address: addr });
+    // return deleteRes;
   }
 }
